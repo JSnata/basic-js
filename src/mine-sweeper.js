@@ -23,9 +23,43 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  const result = [];
+
+  matrix.forEach((row, index) => {
+    result.push([]);
+  });
+
+  
+  matrix.forEach((row, rowIndex) => {
+    row.forEach((item, itemIndex) => {
+      result[rowIndex].push(0);
+    });
+  });
+
+  //i know that it is not the best solution :) but i did what i could
+
+  matrix.forEach((row, rowIndex) => {
+      row.forEach((item, itemIndex) => {
+          if(item) {
+              if(typeof result[rowIndex - 1] !== "undefined"){
+                  (typeof result[rowIndex - 1][itemIndex] !== "undefined") && (result[rowIndex - 1][itemIndex] += 1);
+                  (typeof result[rowIndex - 1][itemIndex + 1] !== "undefined") && (result[rowIndex - 1][itemIndex + 1] += 1);
+                  (typeof result[rowIndex - 1][itemIndex - 1] !== "undefined") && (result[rowIndex - 1][itemIndex - 1] += 1);
+              }
+
+              (typeof result[rowIndex][itemIndex + 1] !== "undefined") && (result[rowIndex][itemIndex + 1] += 1);
+              (typeof result[rowIndex][itemIndex - 1] !== "undefined") && (result[rowIndex][itemIndex - 1] += 1);
+
+              if(typeof result[rowIndex + 1] !== "undefined"){
+                  (typeof result[rowIndex + 1][itemIndex] !== "undefined") && (result[rowIndex + 1][itemIndex] += 1);
+                  (typeof result[rowIndex + 1][itemIndex + 1] !== "undefined") && (result[rowIndex + 1][itemIndex + 1] += 1);
+                  (typeof result[rowIndex + 1][itemIndex - 1] !== "undefined") && (result[rowIndex + 1][itemIndex - 1] += 1);
+              }
+          }
+      });
+  });
+  return result;
 }
 
 module.exports = {
